@@ -3,28 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Carvy, l'appli de ski</title>
-  <meta name="description" content="Carvy mesure vos journées de ski et vous montre votre station : plan des pistes, météo, risque d'avalanche.">
-  <link rel="stylesheet" href="style.css">
+  <title>Invitation Carvy</title>
+  <meta name="description" content="Une invitation à rejoindre un groupe sur Carvy, l'appli de ski.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <main>
   <h1>Carvy</h1>
-  <p class="lead">L'appli de ski qui mesure votre journée et vous montre votre station.</p>
+  <p class="lead">On t'invite à rejoindre un groupe.</p>
 
-  <p>Carvy mesure vos journées de ski : vitesse, distance, dénivelé et descentes. Elle affiche le plan des pistes de votre station, même sans réseau une fois téléchargé, avec la météo, le risque d'avalanche et les alertes météo. Vos journées restent sur votre téléphone : pas de compte, pas de publicité.</p>
+  <p id="avec-code" hidden>Le code du groupe : <strong id="code" style="font-size:1.6em;letter-spacing:.15em"></strong></p>
+  <p id="sans-code" hidden>Ce lien ne contient pas de code valable. Demande une nouvelle invitation à la personne qui te l'a envoyée.</p>
 
-  <h2>Les textes</h2>
-  <ul>
-    <li><a href="confidentialite.html">Politique de confidentialité</a></li>
-    <li><a href="conditions.html">Conditions d'utilisation</a></li>
-    <li><a href="mentions-legales.html">Mentions légales</a></li>
-  </ul>
+  <p id="ouvrir" hidden><a id="lien-appli" href="#">Ouvrir dans Carvy</a></p>
 
-  <h2>Assistance</h2>
-  <p>Une question, un problème, une idée ? Écrivez à <a href="mailto:carvy.ski@gmail.com">carvy.ski@gmail.com</a>.</p>
+  <h2>Tu n'as pas encore Carvy ?</h2>
+  <p>Installe Carvy sur ton iPhone depuis l'App Store, crée ton compte, puis ouvre l'onglet <strong>Réseau</strong>, touche <strong>Rejoindre avec un code</strong> et entre le code ci-dessus.</p>
 
-  <footer>Carvy est publiée par Alban Guillet, à titre non professionnel.</footer>
+  <p><a href="../">Découvrir Carvy</a></p>
 </main>
+<script>
+  // Le code est après le « # » : il n'est jamais envoyé au serveur du site.
+  function montrer() {
+    var code = (location.hash || '').slice(1).toUpperCase();
+    var ok = /^[ABCDEFGHJKMNPQRSTUVWXYZ2-9]{6}$/.test(code);
+    document.getElementById('avec-code').hidden = !ok;
+    document.getElementById('ouvrir').hidden = !ok;
+    document.getElementById('sans-code').hidden = ok;
+    document.getElementById('code').textContent = ok ? code : '';
+    document.getElementById('lien-appli').href = ok ? 'carvy://g/' + code : '#';
+  }
+  montrer();
+  window.addEventListener('hashchange', montrer);
+</script>
 </body>
 </html>
